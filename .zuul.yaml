@@ -1,0 +1,12 @@
+- project:
+    name: BonnyCI/requests-mock
+    check:
+      jobs:
+        - tox-py27:
+          pre-run:
+            - playbooks/sudo-test
+        # - tox-pep8
+    gate:
+      jobs:
+        - tox-py27
+        # - tox-pep8

@@ -1,0 +1,5 @@
+- hosts: all
+  tasks:
+    - name: show me sudo
+      become: yes
+      command: cat /etc/hosts
