@@ -10,6 +10,7 @@
 # License for the specific language governing permissions and limitations
 # under the License.
 
+import logging
 import weakref
 
 from requests.adapters import BaseAdapter
@@ -20,16 +21,14 @@ from requests_mock import exceptions
 from requests_mock.request import _RequestObjectProxy
 from requests_mock.response import _MatcherResponse
 
-import logging
-
-logger = logging.getLogger(__name__)
+_LOG = logging.getLogger(__name__)
 
 try:
     import purl
-    purl_types = (purl.URL,)
+    _PURL_TYPES = (purl.URL,)
 except ImportError:
     purl = None
-    purl_types = ()
+    _PURL_TYPES = ()
 
 ANY = object()
 
@@ -106,7 +105,7 @@ class _Matcher(_RequestHistoryTracker):
                 self._path = self._path.lower()
                 self._query = self._query.lower()
 
-        elif isinstance(url, purl_types):
+        elif isinstance(url, _PURL_TYPES):
             self._scheme = url.scheme()
             self._netloc = url.netloc()
             self._path = url.path()
@@ -155,15 +154,15 @@ class _Matcher(_RequestHistoryTracker):
         matcher_qs = urlparse.parse_qs(self._query)
 
         for k, vals in six.iteritems(matcher_qs):
-            for v in vals:
+            for val in vals:
                 try:
-                    request_qs.get(k, []).remove(v)
+                    request_qs.get(k, []).remove(val)
                 except ValueError:
                     return False
 
         if self._complete_qs:
-            for v in six.itervalues(request_qs):
-                if v:
+            for val in six.itervalues(request_qs):
+                if val:
                     return False
 
         return True
@@ -249,7 +248,9 @@ class Adapter(BaseAdapter, _RequestHistoryTracker):
             if resp is not None:
                 request._matcher = weakref.ref(matcher)
                 resp.connection = self
-                logger.debug('{} {} {}'.format(request._request.method,request._request.url, resp.status_code))
+                _LOG.debug('{} {} {}'.format(request._request.method,
+                                             request._request.url,
+                                             resp.status_code))
                 return resp
 
         raise exceptions.NoMockAddress(request)
