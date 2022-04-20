@@ -1,5 +1,6 @@
 # Stubs for requests_mock.mocker
 
+from json import JSONEncoder
 from http.cookiejar import CookieJar
 from io import IOBase
 from typing import Any, Callable, Dict, List, Optional, Pattern, Type, TypeVar, Union
@@ -56,6 +57,7 @@ class MockerCore:
       raw: HTTPResponse = ...,
       exc: Exception = ...,
       additional_matcher: Optional[Callable[[_RequestObjectProxy], bool]] = ...,
+      json_encoder: Optional[Type[JSONEncoder]] = ...,
       **kwargs: Any) -> Response: ...
     def request(
       self,
@@ -76,6 +78,7 @@ class MockerCore:
       raw: HTTPResponse = ...,
       exc: Exception = ...,
       additional_matcher: Optional[Callable[[_RequestObjectProxy], bool]] = ...,
+      json_encoder: Optional[Type[JSONEncoder]] = ...,
       **kwargs: Any) -> Response: ...
     def get(
       self,
@@ -95,6 +98,7 @@ class MockerCore:
       raw: HTTPResponse = ...,
       exc: Exception = ...,
       additional_matcher: Optional[Callable[[_RequestObjectProxy], bool]] = ...,
+      json_encoder: Optional[Type[JSONEncoder]] = ...,
       **kwargs: Any) -> Response: ...
     def head(
       self,
@@ -114,6 +118,7 @@ class MockerCore:
       raw: HTTPResponse = ...,
       exc: Exception = ...,
       additional_matcher: Optional[Callable[[_RequestObjectProxy], bool]] = ...,
+      json_encoder: Optional[Type[JSONEncoder]] = ...,
       **kwargs: Any) -> Response: ...
     def options(
       self,
@@ -133,6 +138,7 @@ class MockerCore:
       raw: HTTPResponse = ...,
       exc: Exception = ...,
       additional_matcher: Optional[Callable[[_RequestObjectProxy], bool]] = ...,
+      json_encoder: Optional[Type[JSONEncoder]] = ...,
       **kwargs: Any) -> Response: ...
     def post(
       self,
@@ -152,6 +158,7 @@ class MockerCore:
       raw: HTTPResponse = ...,
       exc: Exception = ...,
       additional_matcher: Optional[Callable[[_RequestObjectProxy], bool]] = ...,
+      json_encoder: Optional[Type[JSONEncoder]] = ...,
       **kwargs: Any) -> Response: ...
     def put(
       self,
@@ -171,6 +178,7 @@ class MockerCore:
       raw: HTTPResponse = ...,
       exc: Exception = ...,
       additional_matcher: Optional[Callable[[_RequestObjectProxy], bool]] = ...,
+      json_encoder: Optional[Type[JSONEncoder]] = ...,
       **kwargs: Any) -> Response: ...
     def patch(
       self,
@@ -190,6 +198,7 @@ class MockerCore:
       raw: HTTPResponse = ...,
       exc: Exception = ...,
       additional_matcher: Optional[Callable[[_RequestObjectProxy], bool]] = ...,
+      json_encoder: Optional[Type[JSONEncoder]] = ...,
       **kwargs: Any) -> Response: ...
     def delete(
       self,
@@ -209,6 +218,7 @@ class MockerCore:
       raw: HTTPResponse = ...,
       exc: Exception = ...,
       additional_matcher: Optional[Callable[[_RequestObjectProxy], bool]] = ...,
+      json_encoder: Optional[Type[JSONEncoder]] = ...,
       **kwargs: Any) -> Response: ...
 
 _T = TypeVar('_T')
@@ -220,7 +230,9 @@ class Mocker(MockerCore):
       kw: str = ...,
       case_sensitive: bool = ...,
       adapter: Any = ...,
-      real_http: bool = ...) -> None: ...
+      real_http: bool = ...,
+      json_encoder: Optional[Type[JSONEncoder]] = ...,
+    ) -> None: ...
     def __enter__(self) -> Any: ...
     def __exit__(self, type: Any, value: Any, traceback: Any) -> None: ...
     def __call__(self, obj: Any) -> Any: ...
